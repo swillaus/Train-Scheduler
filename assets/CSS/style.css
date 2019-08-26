@@ -1,0 +1,16 @@
+.jumbotron {
+    background-color: #7f462c;
+    color: white;
+    text-align: center;
+}
+
+.card-header {
+    color: white;
+    background-color: #337ab7;
+    font-weight: 600;
+}
+
+.display-4 {
+    font-weight: 350;
+
+}
