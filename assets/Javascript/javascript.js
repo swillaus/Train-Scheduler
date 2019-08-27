@@ -32,14 +32,32 @@ $("#submitValue").on("click", function (event) {
 });
 
 
-database.ref().on("child_added", function (snapshot) {
-   var sv = snapshot.val();
-   var name = childSnapshot.val().trainName;
-   var role = childSnapshot.val().destination;
-   var startDate = childSnapshot.val().firstTrainTime;
-   var monthlyRate = childSnapshot.val().frequency;
-   console.log(sv.name);
-   console.log(sv.role);
-   console.log(sv.startDate);
-   console.log(sv.monthlyRate);
-})
+// Create the listener even to pick up a new record add and append to table
+database.ref().on("child_added", function (childSnapshot) {
+   
+   trainName = childSnapshot.val().trainName;
+   destination  = childSnapshot.val().destination;
+   firstTrainTime = childSnapshot.val().firstTrainTime;
+   frequency = childSnapshot.val().frequency;
+
+   console.log(trainName);
+   console.log(destination);
+   console.log(firstTrainTime);
+   console.log(frequency);
+
+   // Calculate how far away train is
+   var minutesAway = moment().startOf('hour').fromNow();
+
+   // Create the new row to all values to table
+   var newRow = $("<tr>").append(
+      $("<td>").text(childSnapshot.val().trainName),
+      $("<td>").text(childSnapshot.val().destination),
+      $("<td>").text(childSnapshot.val().frequency),
+      $("<td>").text(childSnapshot.val().firstTrainTime),
+      $("<td>").text(minutesAway),
+   );
+
+   // Append the new row to the table
+   $("#trainTable > tbody").append(newRow);
+});
+
