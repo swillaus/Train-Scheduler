@@ -34,26 +34,31 @@ $("#submitValue").on("click", function (event) {
 
 // Create the listener even to pick up a new record add and append to table
 database.ref().on("child_added", function (childSnapshot) {
-   
+
    trainName = childSnapshot.val().trainName;
-   destination  = childSnapshot.val().destination;
+   destination = childSnapshot.val().destination;
    firstTrainTime = childSnapshot.val().firstTrainTime;
    frequency = childSnapshot.val().frequency;
 
+   var convertedTimeAMPM = moment(firstTrainTime, "hh:mm:").format("hh:mm a");
+
    console.log(trainName);
    console.log(destination);
-   console.log(firstTrainTime);
+   console.log(convertedTimeAMPM);
    console.log(frequency);
 
+
    // Calculate how far away train is
-   var minutesAway = moment().startOf('hour').fromNow();
+   var minutesAway = moment(convertedTimeAMPM, "hh:mm a").fromNow();
+   console.log(minutesAway);
+
 
    // Create the new row to all values to table
    var newRow = $("<tr>").append(
       $("<td>").text(childSnapshot.val().trainName),
       $("<td>").text(childSnapshot.val().destination),
       $("<td>").text(childSnapshot.val().frequency),
-      $("<td>").text(childSnapshot.val().firstTrainTime),
+      $("<td>").text(convertedTimeAMPM),
       $("<td>").text(minutesAway),
    );
 
