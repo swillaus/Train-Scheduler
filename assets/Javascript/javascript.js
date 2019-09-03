@@ -29,6 +29,8 @@ $("#submitValue").on("click", function (event) {
       firstTrainTime: firstTrainTime,
       frequency: frequency,
    });
+    // Add alert message
+    alert("Train has been added successfully")
 });
 
 
@@ -64,5 +66,7 @@ database.ref().on("child_added", function (childSnapshot) {
 
    // Append the new row to the table
    $("#trainTable > tbody").append(newRow);
+
+  
 });
 
